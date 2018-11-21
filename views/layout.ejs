@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Messaging App</title>
+    <!-- *********************************************************** -->
+    <!--                        STYLESHEETS                          -->
+    <!-- *********************************************************** -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/css.css">
+    <link rel="stylesheet" href="/stylesheets/admin.css">
+
+    <!-- *********************************************************** -->
+    <!--                        Spcript                              -->
+    <!-- *********************************************************** -->
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://cdn.ckeditor.com/4.10.0/basic/ckeditor.js"></script>
+
+    <% include ../public/javascripts/script %>
+</head>
+    <%if(data.page =='admin'){ %>
+        <%  include ./admin/index  %>
+    <%}else{%>
+<body>
+                <nav class="navbar navbar-inverse" id="menu-bar">
+                    <div class="container-fluid nav-container">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="/">
+                                <img src="/images/envelope-logo.png" />
+                            </a>
+                        </div>
+                        <div class="collapse navbar-collapse" id="myNavbar">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>
+                                    <a href="/">Home</a>
+                                </li>
+                                <li>
+                                    <a href="/about">About</a>
+                                </li>
+                                <% if(data.currentUser){ %>
+                                    <li>
+                                        <a href="" class="notification bell-size"></a>
+                                    </li>
+                                    <li class="logout-padding">
+                                        <%  if(data.currentUser.profile_pic==''){ %>
+                                            <img class="profile-photo" alt="profile-pic" src="/images/profile-image.png" data-toggle="dropdown" />
+                                            <% }else{ %>
+                                                <img class="profile-photo" src="/images/<%= data.currentUser.profile_pic %>" onerror="this.src='/images/avtar.png'" data-toggle="dropdown"/>
+                                                <% } %>
+                                                    <span class="caret" data-toggle="dropdown"></span>
+                                                    <ul class="dropdown-menu user-info-menu" role="menu">
+                                                        <li>
+                                                            <a href="/user/myMessages"> Messages</a>
+                                                        </li>
+                                                        <%if(data.currentUser.email !== 'unsecured'){%>
+                                                            <li>
+                                                                <a href="/user/updateprofile"> Update Profile</a>
+                                                            </li>
+                                                        <%}%>
+                                                        <li>
+                                                            <a href="/user/logout">Signout</a>
+                                                        </li>
+                                                    </ul>
+                                    </li>
+                                    <%}else{%>
+                                        <li>
+                                            <a href="/register">Sign up</a>
+                                        </li>
+                                        <li>
+                                            <a href="/login" title="Sign in">
+                                                <span class="glyphicon glyphicon-log-in"></span>
+                                            </a>
+                                        </li>
+                                        <% };%>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <% if(data.page=='common'){ %>
+                    <%  include ./common/index  %>
+                <%}else if(data.page=='user'){ %>
+                        <% include ./user/index  %>
+                <%}%>
+                                    <footer class="footer">
+                                        <div class="footer-container">Copyright © 2018
+                                            <a href="https://www.bdaq.io/" target="blank" title="Bdaq.io" class="website">Bdaq.io</a>. AlI Rights Reserved</div>
+                                    </footer>
+                               
+</body>
+<%}%>
+</html>

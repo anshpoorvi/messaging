@@ -1,0 +1,43 @@
+            <div class="landing-page_content">
+        <div class="landing-page_header">
+          <h1>Login</h1>
+        </div>
+        <div class="login-page_container row">
+          <div class="col-sm-12 col-xs-12">
+
+            <form action="/validate_login" method="post" id="login-form">
+              
+              <div class="col-xs-12 col-sm-12">
+                
+                <div class="field-validation-success">
+              <%=data.message%>
+                </div>      
+              </div>
+              <div class="col-xs-12 col-sm-12">
+                <input type="text" class="form-control" id="lg_username" name="ethadd" value="" placeholder="Enter registered email" autocomplete="off">
+             <div class="field-validation-error"> <%=data.error%></div>
+              </div>
+              <div class="col-xs-12 col-sm-12">
+                <input type="password" class="form-control" id="lg_password" name="password" placeholder="Password" autocomplete="off">
+                <div class="field-validation-error"></div>
+              </div>
+              <div class="col-xs-12 col-sm-12">
+                <div class="check-box_container">
+                  <input type="checkbox" id="lg_remember" name="remember_me" value="yes">
+                  <span>Remember</span>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-12 button-container">
+                <button class="button button--moema button--moema-white button--moema-white-shadow button--inverted button--text-thick button--size-s button--moema-small"
+                  type="submit">Login</button>
+              </div>
+              <div class="col-sm-12 col-xs-12">
+                <div class="forgotPassword">
+                 Forgot your password? <a href="/forgotPassword" title="Forgot your password?">Get it back!</a>
+                </div>
+                </div>
+            </form>
+          </div>
+        </div>
+
+      </div>

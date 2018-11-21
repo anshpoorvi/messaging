@@ -1,0 +1,25 @@
+    <div class="landing-page_content login">
+        <div class="landing-page_header">
+            <h1>Ether Mail</h1>
+        </div>
+        <div class="login-page_container row">
+            <div class="col-sm-12 col-xs-12">
+                <form action="/user/unsecure_ethadd/1" method="post">
+                    <div class="col-xs-12 col-sm-12">
+                        <div class="field-validation-error"><%= data.error%></div>
+                        <div class="field-validation-success"><%= data.message%></div>
+                        <input type="text" name="ethadd" class="form-control" placeholder="Ether wallet Address" autocomplete="off">
+                    </div>
+                    <div class="col-xs-12 col-sm-12 button-container">
+                        <button class="button button--moema button--moema-white button--moema-white-shadow button--inverted button--text-thick button--size-s button--moema-small"
+                            type="submit">Go</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-xs-12 col-sm-12 text-center login-page_link">
+                <a href="/register" class="linkcolor">Get Account Secured</a> |
+                <a href="/login" class="linkcolor"> Already Secured</a>
+            </div>
+        </div>
+    </div>
+

@@ -1,0 +1,53 @@
+
+<% var month = [];
+month[0] = "January";
+month[1] = "February";
+month[2] = "March";
+month[3] = "April";
+month[4] = "May";
+month[5] = "June";
+month[6] = "July";
+month[7] = "August";
+month[8] = "September";
+month[9] = "October";
+month[10] = "November";
+month[11] = "December"; 
+%>
+<br>
+<br> 
+<div id="messageContainer">
+<div class="messageGrid-container">
+<div class="table-responsive">
+<div class="col-sm-12 col-xs-12">
+        <div class="field-validation-error">
+                <%=data.error%>
+         </div>
+<%if(!data.error){%>
+<table class="table dataTable table-bordered" id="msgTable">
+<thead>
+<tr>
+<th>Transation ID</th>
+<th>Transaction Type</th>
+<th>Date Time</th>
+</tr>
+</thead>
+<tbody>
+<% data.history.forEach(function(data1){%>
+<tr>
+<%
+var type = data1.transactionType.split("."); 
+
+%>
+<td><%=data1.transactionId%></td>
+<td><%=type[3] %></td>
+<td><%=data1.transactionTimestamp.getDate()+" "+(month[data1.transactionTimestamp.getMonth()])+" "+ data1.transactionTimestamp.toLocaleTimeString() %></td>
+</tr>
+<%});%>
+</tbody>
+</table>
+<%}%>
+</div>
+</div>
+</div>
+</div>
+

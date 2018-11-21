@@ -1,0 +1,76 @@
+<% var month = [];
+month[0] = "Jan";
+month[1] = "Feb";
+month[2] = "Mar";
+month[3] = "Apr";
+month[4] = "May";
+month[5] = "Jun";
+month[6] = "Jul";
+month[7] = "Aug";
+month[8] = "Sep";
+month[9] = "Oct";
+month[10] = "Nov";
+month[11] = "Dec"; 
+%>
+    <div class="tab-pane fade in active" id="home">
+        <div class="list-group">
+                <form action="/delete" method="post" name="deleteForm" id="deleteForm">
+                 <input type="hidden" name="messageIds" id="messageIds">
+                <table class="table dataTable table-bordered inboxColor" id="reportTable">
+                        <thead>
+                          <tr>
+                            <th class="no-sort">Select</th>
+                            <th class="no-sort">Star</th>
+                            <th>Subject</th>
+                            <th>Message</th>
+                            <th class="date">Date</th>
+                            <th class="no-sort">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                     <% var h=0;
+                            var i =0;
+                           data.msg_data.forEach(function(suser){
+                        %>
+                        <tr id="<%= suser.id %>">
+                                <input id="subject<%= suser.id %>" type="hidden" value="<%=suser.subject%>">
+                                <input id="message<%= suser.id %>" type="hidden" value="<%=suser.message%>">
+                       <td>  
+                            <input id="<%= suser.id %>" class="check" type="checkbox" name="<%=suser.id%>" value="<%=suser.id%>">
+                        </td>
+                        <td>  
+                            <span id="<%= suser.id %>" class="fa fa-star comet"></span> 
+                       </td>
+                
+             
+                            <td> 
+                                <span>
+                                     <%- suser.subject%> 
+                                 </span>  
+                            </td>
+                            <td> 
+                                <span>
+                                    <%- suser.message%>  
+                                </span>  
+                       
+                            </td>
+                            <td> <span  title="<%= suser.date_time.getHours()+ " : " + suser.date_time.getMinutes() %>">&nbsp;&nbsp;
+
+                                <%=(month[suser.date_time.getMonth()] )+" "+
+                                        suser.date_time.getDate()%>
+                            </span></td>
+                            <td>
+                                <a href="#"> <span class="opendraft" id="<%= suser.id%>"  data-target="msg_data<%=h%>">...</span></a>   
+                                    
+                            </td>
+                            
+                        </tr>       
+                    <% h++; }); %>
+                </tbody>
+                </table>
+                </form>
+            <!-- end user msg -->
+
+        </div>
+
+    </div>

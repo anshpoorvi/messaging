@@ -1,0 +1,245 @@
+    <body class="admin-bg">
+        <nav class="navbar navbar-inverse admin-menu" id="menu-bar">
+            <div class="container-fluid nav-container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">
+                        <img src="/images/envelope-logo.png" />
+                    </a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="/admin/logoutadmin"><span title="Logout"class="glyphicon glyphicon-log-out"></span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div id="wrapper">
+            <div class="loader" id="loader">
+                <i class="fa fa-spinner fa-spin"></i>
+            </div>
+            <div id='sidebar-wrapper' class='navbar-default navbar-static-side'>
+                <div class='sidebar-nav'>
+                    <div id='side-menu'>
+                        <ul class='nav'>
+                            <li class="compose" id="adminCompose">
+                                <a href="javscript:void(0);">Create Admin Messages
+                                </a>
+                            </li>
+                        </ul>
+
+                        <ul class='nav'>
+                            <li>
+                                <a href="/admin/adminInbox" id="admininboxButton">Manage Messages
+                                </a>
+                            </li>
+                            
+                        </ul>
+                        <hr/>
+                        <ul class='nav'>
+                            <li class="active">
+                                <a href="/admin/alluser" id="adminUserlistButton">Users
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/admin/showReport" id="reportButton">Reports
+                                </a>
+                            </li>
+
+                            <li> 
+                                <a href="/admin/generateCsv" title="Generate CSV">Generate CSV
+                                </a>
+                            </li>
+                           
+                            <li>
+                                <a href="javscript:void(0)" data-toggle="modal" data-target="#bulkAirdrop">Bulk airdrop
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="/admin/blockchain"  id="blockchain" >Blockchain Message Transaction 
+                                </a>
+                         </li>
+                         <!-- <li>
+                                <a href="/admin/restTransaction"  id="blockchain" >Transaction By Rest
+                                </a>
+                         </li> -->
+                         <li>
+                                <a href="/admin/historian"  id="blockchain" >Blockchain History 
+                                </a>
+                         </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="page-wrapper">
+                <div id="overlay"></div>
+                <div class="mainContainer">
+                    <div class="appContainer">
+                        <div>
+                            <div id="adminUserlist">    
+                            <%- body %>  
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- /.modal compose message -->
+        <div class="modal fade" id="AdminModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-info">
+                        <button type="button" class="btn btn-default close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title">
+                            <span class="glyphicon glyphicon-envelope"></span> Admin Messages</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form role="form" action="/admin/sendAdminMessage" method="POST" class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-2" for="inputTo">
+                                    <span class="glyphicon glyphicon-envelope"></span> Type</label>
+                                <div class="col-sm-10">
+                                    <select name="messageType"  class="form-control">
+                                         <option value="sponsored">Sponsored Messages</option>
+                                        <option value="random">Random Messages</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2" for="inputSubject">
+                                    <span class="glyphicon glyphicon-list-alt"></span>Subject</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="subject" id="inputSubject" placeholder="subject">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-12" for="inputBody">
+                                    <span class="glyphicon glyphicon-list"></span>Message</label>
+                                <div class="col-sm-12">
+                                    <textarea class="form-control" name="message" id="message" rows="8"></textarea>
+
+                                </div>
+                            </div>
+                            <div class="modal-footer modal-footer1">
+                                <!-- <button type="button" class="btn btn-default"  data-dismiss="modal" aria-hidden="true">×</button> -->
+                                <button type="button" class="btn btn-default pull-left modal-margin" data-dismiss="modal">Cancel</button>
+                                
+                                <button type="submit" class="btn btn-primary ">Send
+                                    <i class="fa fa-arrow-circle-right fa-lg"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal compose message -->
+
+        <!-- bulk message modal -->
+        <div class="modal fade" id="bulkMessage" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-info">
+                            <button type="button" class="btn btn-default close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">
+                                <span class="glyphicon glyphicon-envelope"></span> Compose Message</h4>
+                        </div>
+                        <div class="modal-body">    
+                            <form role="form" action="/admin/bulkSend" method="POST" class="form-horizontal">
+    
+                                <input type="hidden" name="senderAddress" value="bdaq-team" />
+                                <input type="hidden" id="senderType" name="senderType" />
+                                <div class="form-group">
+                                    <label class="col-sm-2" for="etherAddress">
+                                        <span class="glyphicon glyphicon-user"></span>To</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" name="etherAddress"  id="etherAddress" placeholder="comma separated EWA of recipients" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2" for="inputSubject">
+                                        <span class="glyphicon glyphicon-list-alt"></span>Subject</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" name="subject" id="inputSubject" placeholder="subject">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12" for="inputBody">
+                                        <span class="glyphicon glyphicon-list"></span>Message</label>
+                                    <div class="col-sm-12">
+                                        <textarea class="form-control" name="message1" id="message" rows="8"></textarea>
+    
+                                    </div>
+                                </div>
+                                
+                                <div class="modal-footer modal-footer1">
+                                        
+                                    <!-- <button type="button" class="btn btn-default"  data-dismiss="modal" aria-hidden="true">×</button> -->
+                                    <button type="button" class="btn btn-default pull-left modal-margin" data-dismiss="modal">Cancel</button>
+                                  
+                                    <button type="submit" class="btn btn-primary ">Send
+                                        <i class="fa fa-arrow-circle-right fa-lg"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+    
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- bulk-message modal -->
+
+            <div class="modal fade" id="bulkAirdrop" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header modal-header-info">
+                                <button type="button" class="btn btn-default close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="modal-title">
+                                    Bulk Airdrop</h4>
+                            </div>
+                            <div class="modal-body">
+                                    <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                            <div class="input-group file-upload">
+                                            <input type="text" class="form-control" id="fileName" readonly value="" placholder="">
+                                              <label class="input-group-btn">
+                                                  <span class="btn btn-primary upload-button">
+                                                      Browse <input type="file" id="bulkfile" name="bulkfile" accept="" style="display: none;" >
+                                                  </span>
+                                              </label>
+                                            </div>
+                                             <div class="field-validation-error"></div>
+                                              
+                                          <img id="uploadImage" src="#" alt="your image" />
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 button-container flex-center">
+                                            <button class="button button--moema button--moema-blue button--moema-white-shadow button--inverted button--text-thick button--size-s button--moema-small"
+                                                type="button" onclick="importbulkairdrop()" data-dismiss="modal">Upload</button>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+
+            <script> 
+                CKEDITOR.replace('message');// for toolbar
+                CKEDITOR.replace('message1');// for toolbar
+            </script>
+    </body>

@@ -1,0 +1,879 @@
+<script>
+  //  Change Password by admin
+  function importbulkairdrop() {
+    let inputFiles = $('#bulkfile').get(0).files;
+    let inputFile = inputFiles[0];
+    let formData = new FormData();
+    formData.append('csvfile', inputFile);
+    $("#bulkairdrop").css("display", "none");
+    $("#bulkipploadLoader").css("display", "block");
+    $.ajax({
+      url: "/admin/airdrop",
+      type: "post", // dataType:"json",
+      dataType: "json",
+      data: formData,
+      cache: false,
+      contentType: false,
+      processData: false,
+      success: function (response) {
+        document.location = "/admin/airdrop";
+      },
+      error: function (textStatus, errorThrown) {
+
+      }
+    });
+  }
+  
+    //***********************Bulk airdrop************************
+    function saveToDraft() {
+    let sender = document.getElementById('ethadd').value;
+    let sub = document.getElementById('inputSubject').value;
+    let msg = CKEDITOR.instances['message'].getData();
+    
+    $.ajax({
+          url: '/user/saveToDraft',
+          type: 'post',
+          data: {
+            senderAdd: sender,
+            subject: sub,
+            message: msg
+          },
+          success: function (response) {
+          }
+        });
+        $('#myModal').modal('toggle');
+  }
+    //***********************save to draft ************************
+  function uploadFileURL(input) {
+
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        $('#fileName').removeClass('placholder-color');
+      }
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+  $(document).ready(function () {
+
+    $("#bulkfile").change(function () {
+      uploadFileURL(this);
+      var file = document.getElementById('bulkfile').files[0];
+      file.name;
+      var text = file.name;
+      $("#fileName").val(text);
+      // console.log('file', file);
+    });
+
+    $("#attachment").change(function () {
+      uploadFileURL(this);
+      var file = document.getElementById('attachment').files[0];
+      file.name;
+      var text = file.name;
+      $("#attached-fileName").val(text);
+      // console.log('file', file);
+    });
+    $("#imgUploadLink").change(function () {
+      uploadImgReadURL(this);
+      var file = document.getElementById('imgUploadLink').files[0];
+      file.name;
+      var text = file.name;
+      $("#fileName").val(text);
+    });
+
+    
+    //***********************************************
+    $('.changepassword').click(function () {
+      //console.log(":::::::::::::::::::::::::::::::::::::::::::jand");
+      let email = $(this).attr("id");
+      $("#email_id").val(email);
+    });
+
+    $('#bulkCompose').click(function () {
+      var mid = [];
+      let userCheckBox1 = document.querySelectorAll('.selectUser:checked');
+      for (var i = 0; i < userCheckBox1.length; i++) {
+        let str = userCheckBox1[i].id;
+        myarray = str.split(',');
+        for (let k = 1; k < myarray.length; k++) {
+          mid.push(myarray[k]);
+          $("#etherAddress").val(mid);
+        }
+      }
+    });
+    $('#promoCompose').click(function () {
+      let mid1 = [];
+      let userCheckBox1 = document.querySelectorAll('.selectUser:checked');
+      for (var i = 0; i < userCheckBox1.length; i++) {
+        let str = userCheckBox1[i].id;
+        myarray = str.split(',');
+        for (let k = 1; k < myarray.length; k++) {
+          mid1.push(myarray[k]);
+          $("#etherAddress").val(mid1);
+        }
+      }
+    });
+
+    //  block user by admin
+
+    $('.blockUser').click(function () {
+      let uid = $(this).attr("id");
+
+      $("#buserId").val(uid);
+
+    });
+
+    //  block user by admin
+    $('.unblockUser').click(function () {
+      let uid = $(this).attr("id");
+      $("#userId").val(uid);
+    });
+    //  Logout user by admin
+    $('.logoutByAdmin').click(function () {
+      let uid = $(this).attr("id");
+      $("#email").val(uid);
+    });
+
+    //Submit search form
+    $("#searchSumit").click(function () {
+      $("#searchForm").submit();
+    });
+
+
+    //Submit search form
+    $("#findUserLink").click(function () {
+      $("#findUserForm").submit();
+    });
+
+
+    $("#checknone").click(function () {
+      $(".check").prop('checked', false);
+      $(".checkAll").prop('checked', false);
+
+    });
+    $(".checkAll").click(function () {
+      $(".check").prop('checked', $(this).prop('checked'));
+
+    });
+
+    $("#checkAllop").click(function () {
+      $(".check").prop('checked', true);
+      $(".checkAll").prop('checked', true);
+
+    });
+  });
+
+
+ $(document).ready(function () {
+      var url = window.location.pathname; 
+      var activePage = url.substring(url.lastIndexOf('/') + 1);
+        $('.side-menu-mail li a').each(function () { 
+            var linkPage = this.href.substring(this.href.lastIndexOf('/') + 1); 
+            if (activePage === linkPage) { 
+              $( ".side-menu-mail li" ).siblings().removeClass('active'); 
+              $(this).parent().addClass('active');
+            }
+        });
+
+         $('#side-menu ul li a').each(function () { 
+            var linkPage = this.href.substring(this.href.lastIndexOf('/') + 1); 
+            if (activePage === linkPage) {
+              $( "#side-menu ul li" ).siblings().removeClass('active'); 
+                $(this).parent().addClass('active');
+            }
+        });
+
+         $('#myNavbar ul li a').each(function () { 
+            var linkPage = this.href.substring(this.href.lastIndexOf('/') + 1); 
+            if (activePage === linkPage) {
+              $( "#side-menu ul li" ).siblings().removeClass('active'); 
+                $(this).parent().addClass('active');
+            }
+        });
+ });
+
+
+
+  //   (function ($) {
+  //     "use strict";
+
+  //     // Login Form
+  //     //----------------------------------------------
+  //     // Validation
+  //     $("#login-form").validate({
+  //       rules: {
+  //         lg_username: "required",
+  //         lg_password: "required",
+  //       },
+  //       errorClass: "form-invalid"
+  //     });
+
+  //     // Form Submission
+
+  //     // Register Form
+  //     //----------------------------------------------
+  //     // Validation
+  //     $("#register-form").validate({
+  //       rules: {
+  //         reg_username: "required",
+  //         reg_password: {
+  //           required: true,
+  //           minlength: 5
+  //         },
+  //         reg_password_confirm: {
+  //           required: true,
+  //           minlength: 5,
+  //           equalTo: "#register-form [name=reg_password]"
+  //         },
+  //         reg_email: {
+  //           required: true,
+  //           email: true
+  //         },
+  //         reg_agree: "required",
+  //       },
+  //       errorClass: "form-invalid",
+  //       errorPlacement: function (label, element) {
+  //         if (element.attr("type") === "checkbox" || element.attr("type") === "radio") {
+  //           element.parent().append(label); // this would append the label after all your checkboxes/labels (so the error-label will be the last element in <div class="controls"> )
+  //         }
+  //         else {
+  //           label.insertAfter(element); // standard behaviour
+  //         }
+  //       }
+  //     });
+
+  //     // Form Submission
+  //     $("#register-form").submit(function () {
+  //       remove_loading($(this));
+
+  //       if (options['useAJAX'] == true) {
+  //         dummy_submit_form($(this));
+  //         return false;
+  //       }
+  //     });
+
+  //     // Forgot Password Form
+  //     //----------------------------------------------
+  //     // Validation
+  //     $("#forgot-password-form").validate({
+  //       rules: {
+  //         fp_email: "required",
+  //       },
+  //       errorClass: "form-invalid"
+  //     });
+
+  //     // Form Submission
+  //     $("#forgot-password-form").submit(function () {
+  //       remove_loading($(this));
+
+  //       if (options['useAJAX'] == true) {
+  //         dummy_submit_form($(this));
+  //         return false;
+  //       }
+  //     });
+
+  //     // Loading
+  //     //----------------------------------------------
+  //     function remove_loading($form) {
+  //       $form.find('[type=submit]').removeClass('error success');
+  //       $form.find('.login-form-main-message').removeClass('show error success').html('');
+  //     }
+
+  //     function form_loading($form) {
+  //       $form.find('[type=submit]').addClass('clicked').html(options['btn-loading']);
+  //     }
+
+  //     function form_success($form) {
+  //       $form.find('[type=submit]').addClass('success').html(options['btn-success']);
+  //       $form.find('.login-form-main-message').addClass('show success').html(options['msg-success']);
+  //     }
+
+  //     function form_failed($form) {
+  //       $form.find('[type=submit]').addClass('error').html(options['btn-error']);
+  //       $form.find('.login-form-main-message').addClass('show error').html(options['msg-error']);
+  //     }
+
+
+  //   })(jQuery);
+  //check box
+
+
+
+  function refreshFunction() {
+    location.reload();
+  }
+  $(document).ready(function () {
+    $("#modeClose").click(function () {
+      location.reload();
+    });
+  });
+
+  //******************* Notification **********************/
+  // var el = document.querySelector('.notification');
+  // document.querySelector('#notBtn').addEventListener('click', function () {
+  //   var count = Number(el.getAttribute('data-count')) || 0;
+  //   el.setAttribute('data-count', count + 1);
+  //   el.classList.remove('notify');
+  //   el.offsetWidth = el.offsetWidth;
+  //   el.classList.add('notify');
+  //   if (count === 0) {
+  //     el.classList.add('show-count');
+  //   }
+  // }, false);
+  //****************** Notification **********************/
+  $(document).ready(function () {
+    $("#readmsg").click(function () {
+      var ids = [];
+      $("input:checkbox").each(function () {
+        var $this = $(this);
+        if ($this.is(":checked")) {
+          ids.push($this.attr("id"));
+        }
+        location.reload();
+      });
+      if (ids.length > 0)
+        $.ajax({
+          url: '/user/markas_read',
+          type: 'post',
+          data: {
+            searchid: ids
+          },
+          success: function (response) {
+          }
+        });
+      else alert("select the checkbox first");
+    });
+
+    //For mark as read msg
+    $("#unreadmsg").click(function () {
+      var ids = [];
+      $("input:checkbox").each(function () {
+        var $this = $(this);
+        if ($this.is(":checked")) {
+          if ($this.attr("id") > 0) {
+            ids.push($this.attr("id"));
+          }
+        }
+        location.reload();
+
+      });
+      if (ids.length > 0)
+        $.ajax({
+          url: '/user/markas_unread',
+          type: 'post',
+          data: {
+            searchid: ids
+          },
+          success: function (response) {
+            //console.log(response);
+
+          }
+        });
+      else alert("select the checkbox first");
+
+    });
+
+    //For mark as read msg
+    $(".read").click(function () {
+      let id = [$(this).attr("id")];
+      //  id.css("font-weight","normal");
+      let aid = "#" + id;
+      $(aid).css("font-weight", "normal");
+
+      if (id > 0) {
+        $.ajax({
+          url: '/user/markas_read',
+          type: 'post',
+          data: {
+            searchid: id
+          },
+          success: function (response) {
+
+          }
+
+        });
+      }
+    });
+    $(".comet").click(function () {
+
+      $(this).toggleClass("checked");
+    });
+
+
+    $("#modeClose").click(function () {
+
+      location.reload();
+    });
+
+
+  });
+
+  function deleteMessage() {
+    var ids = "ids";
+    $("input:checkbox").each(function () {
+     var $this = $(this);
+      if ($this.is(":checked")) {
+        ids = ids + "," + $this.attr("id");
+      }
+    });
+    let urlString = window.location.href;
+    let suburl = urlString.split("/user/");
+    let sendbox = suburl[1];
+    document.getElementById("messageIds").value = ids;
+    if(sendbox=='sendBoxPage' || sendbox=='sendBoxPage#'){
+      document.getElementById("deleteForm").action = "/user/delete_send";
+    }else{
+      document.getElementById("deleteForm").action = "/user/delete_it";
+    }
+    
+    document.getElementById("deleteForm").submit();
+  }
+
+
+  //**********************************************************
+  // all from script.ejs
+  //**********************************************************
+
+  $(function () {
+    $('#bulkMessage').on('hidden.bs.modal', function () {
+
+      $(this).find("input,textarea,select").val('').end();
+    });
+  });
+  $(document).ready(function () {
+    $('#reportTable').DataTable({
+      "order": [],
+      "columnDefs": [{
+        "targets": 'no-sort',
+        "orderable": false,
+      }]
+    });
+  });
+
+  $(document).ready(function () {
+
+    $('#msgTable').DataTable({
+      "order": [],
+      "columnDefs": [{
+        "targets": 'no-sort',
+        "orderable": false,
+      }]
+    });
+
+
+    "use strict";
+
+
+
+    $("#uploadImage").hide();
+    $("#fileName").addClass('placholder-color');
+
+    function uploadImgReadURL(input) {
+
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $('#uploadImage').attr('src', e.target.result);
+          $('#uploadImage').show();
+          $('#fileName').removeClass('placholder-color');
+        }
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+
+
+
+    $(document).ready(function () {
+      $("#sendButton").on('click', function () {
+
+        // $("#inbox").hide();
+        // $("#sendMail").addClass('show');
+        $("#sendButton").parent('li').addClass('active');
+        $("#inboxButton").parent('li').removeClass('active');
+      });
+
+      $("#inboxButton").on('click', function () {
+        //  $("#inbox").show();
+        //  $("#sendMail").removeClass('show');
+        $("#sendButton").parent('li').removeClass('active');
+        $("#inboxButton").parent('li').addClass('active');
+      });
+
+      $(document).ready(function () {
+        $("#adminUserlistButton").on('click', function () {
+          $("#adminUserlist").show();
+          $("#admininbox").removeClass('show');
+          $('#adminsend').removeClass('show');
+          $("#reportContainer").removeClass('show');
+
+          $("#adminUserlistButton").parent('li').addClass('active');
+          $("#admininboxButton").parent('li').removeClass('active');
+          $("#reportButton").parent('li').removeClass('active');
+          $("#adminSentButton ").parent('li').removeClass('active');
+        });
+      });
+      $(document).ready(function () {
+        $("#admininboxButton").on('click', function () {
+          $("#adminUserlist").hide();
+          $("#admininbox").addClass('show');
+          $('#adminsend').removeClass('show');
+          $("#reportContainer").removeClass('show');
+
+          $("#admininboxButton ").parent('li').addClass('active');
+          $("#adminUserlistButton").parent('li').removeClass('active');
+          $("#reportButton").parent('li').removeClass('active');
+          $("#adminSentButton ").parent('li').removeClass('active');
+        });
+      });
+      $("#reportButton").on('click', function () {
+        $('#loader').addClass('show');
+        $("#adminUserlist").hide();
+        $("#admininbox").removeClass('show');
+        $('#adminsend').removeClass('show');
+        $('#reportContainer').addClass('show');
+
+        $("#reportButton").parent('li').addClass('active');
+        $("#admininboxButton").parent('li').removeClass('active');
+        $("#adminUserlistButton").parent('li').removeClass('active');
+        $("#adminSentButton ").parent('li').removeClass('active');
+
+      });
+
+
+      var teststatus = '';
+      if (teststatus == 'true') {
+        $("#adminUserlist").hide();
+        $("#admininbox").addClass('show');
+        $('#adminsend').removeClass('show');
+        $("#reportContainer").removeClass('show');
+
+        $("#admininboxButton ").parent('li').addClass('active');
+        $("#adminUserlistButton").parent('li').removeClass('active');
+        $("#reportButton").parent('li').removeClass('active');
+        $("#adminSentButton ").parent('li').removeClass('active');
+      }
+      else if (teststatus == 'report') {
+        var seeker = '';
+        $("#seeker").val(seeker);
+        $("#adminUserlist").hide();
+        $("#admininbox").removeClass('show');
+        $('#adminsend').removeClass('show');
+        $('#reportContainer').addClass('show');
+        $("#reportButton").parent('li').addClass('active');
+        $("#admininboxButton").parent('li').removeClass('active');
+        $("#adminUserlistButton").parent('li').removeClass('active');
+        $("#adminSentButton ").parent('li').removeClass('active');
+        $('#loader').removeClass('show');
+      } else if (teststatus == 'userList') {
+        var seeker = '';
+        $("#userListSeeker").val(seeker);
+        $("#adminUserlist").show();
+        $("#admininbox").removeClass('show');
+        $('#adminsend').removeClass('show');
+        $("#reportContainer").removeClass('show');
+
+        $("#adminUserlistButton").parent('li').addClass('active');
+        $("#admininboxButton").parent('li').removeClass('active');
+        $("#reportButton").parent('li').removeClass('active');
+        $("#adminSentButton ").parent('li').removeClass('active');
+
+      }
+
+
+
+      $("#adminSentButton").on('click', function () {
+        $("#adminUserlist").hide();
+        $("#admininbox").removeClass('show');
+        $('#reportContainer').removeClass('show');
+        $('#adminsend').addClass('show');
+
+        $("#adminSentButton ").parent('li').addClass('active');
+        $("#admininboxButton ").parent('li').removeClass('active');
+        $("#adminUserlistButton").parent('li').removeClass('active');
+        $("#reportButton").parent('li').removeClass('active');
+      });
+    });
+
+
+    function searchReport() {
+      $("#adminUserlist").hide();
+      $("#admininbox").removeClass('show');
+      $('#adminsend').removeClass('show');
+      $('#reportContainer').addClass('show');
+      $("#reportButton").parent('li').addClass('active');
+      $("#admininboxButton").parent('li').removeClass('active');
+      $("#adminUserlistButton").parent('li').removeClass('active');
+      $("#adminSentButton ").parent('li').removeClass('active');
+
+    }
+
+    $(document).ready(function () {
+
+      var select_all = document.getElementById("selectAllUser");
+      var checkboxes = document.getElementsByClassName("selectUser");
+
+      var ids = []; var myarray = '';
+
+      //  ******************************************************
+      $('#selectAllUser').change(function (e) {
+
+        for (i = 0; i < checkboxes.length; i++) {
+          checkboxes[i].checked = select_all.checked;
+          $('.action-button-dashboard_button').addClass('show');
+          console.log(' checkboxes[i].checked', checkboxes[i].checked);
+
+          if (checkboxes[i].checked == false) {
+            $('.action-button-dashboard_button').removeClass('show');
+          }
+
+
+
+        }
+
+        var userCheckBox = document.querySelectorAll('.selectUser:checked');
+
+        for (var i = 0; i < userCheckBox.length; i++) {
+          let str = userCheckBox[i].id;
+          myarray = str.split(',');
+          for (let k = 1; k < myarray.length; k++) {
+            ids.push(myarray[k]);
+            if (this.checked === true) {
+              $("#etherAddress").val(ids);
+            }
+          }
+
+
+        }
+      });
+
+      var ids1 = []; var myarray1 = '';
+      for (var i = 0; i < checkboxes.length; i++) {
+
+        checkboxes[i].addEventListener('change', function (e) {
+          if (this.checked == false) {
+            select_all.checked = false;
+          }
+
+          if (document.querySelectorAll('.selectUser:checked').length == checkboxes.length) {
+            select_all.checked = true;
+            $('.action-button-dashboard_button').addClass('show');
+
+          }
+          var userCheckBox = document.querySelectorAll('.selectUser:checked').length;
+          if (userCheckBox == 0) {
+
+            $('.action-button-dashboard_button').removeClass('show');
+          }
+          else {
+            $('.action-button-dashboard_button').addClass('show');
+          }
+        });
+
+      }
+    });
+
+
+    // Options for Message
+    //----------------------------------------------
+    var options = {
+      'btn-loading': '<i class="fa fa-spinner fa-pulse"></i>',
+      'btn-success': '<i class="fa fa-check"></i>',
+      'btn-error': '<i class="fa fa-remove"></i>',
+      'msg-success': 'All Good! Redirecting...',
+      'msg-error': 'Wrong login credentials!',
+      'useAJAX': true,
+    };
+
+    // Load inbox on block
+    $(".changeStatus").on('click', function () {
+      $("#adminUserlist").hide();
+      $("#admininbox").addClass('show');
+      $('#adminsend').removeClass('show');
+      $("#reportContainer").removeClass('show');
+      $("#admininboxButton ").parent('li').addClass('active');
+      $("#adminUserlistButton").parent('li').removeClass('active');
+      $("#reportButton").parent('li').removeClass('active');
+      $("#adminSentButton ").parent('li').removeClass('active');
+    });
+
+  });
+
+  $(document).ready(function () {
+    $(".reply").click(function () {
+      let id = parseInt($(this).attr("id"));
+      let sid = "#senderAdd" + id;
+      let subid = "#subject" + id;
+      let msgid = "#usermessage" + id;
+      let senderAdd = $.trim($(sid).text());
+      let subject = "RE : " + $.trim($(subid).text());
+      let message = $.trim($(msgid).text());
+      $("#inputTo").val(senderAdd);
+      $("#inputSubject").val(subject);
+      $('textarea.editor').val('message');
+      $("#myModal").modal();
+
+    });
+
+    $(".forward").click(function () {
+      let id = parseInt($(this).attr("id"));
+      let sid = "#senderAdd" + id;
+      let subid = "#subject" + id;
+      let msgid = "#usermessage" + id;
+      let senderAdd = $.trim($(sid).text());
+      let subject = "FWD: " + $.trim($(subid).text());
+      let message = $.trim($(msgid).text());
+
+      $("#inputSubject").val(subject);
+      $('textarea.editor').val('message');
+      $("#myModal").modal();
+    });
+
+    $(".forward").click(function () {
+      $("#myModal").modal();
+    });
+
+    //*******************************************//
+    $(".opendraft").click(function () {
+      let id = parseInt($(this).attr("id"));
+      let subid = "subject" + id;
+      let mesid = "message" + id;
+      let subject = document.getElementById(subid).value;
+      let message =  document.getElementById(mesid).value;
+      $("#inputSubject").val(subject);
+      CKEDITOR.instances.message.setData(message);
+    
+    });
+
+    $(".opendraft").click(function () {
+      $("#myModal").modal();
+    });
+    //*******************************************//
+
+    $("#checknone").click(function () {
+
+      $(".check").prop('checked', false);
+      $(".checkAll").prop('checked', false);
+
+    });
+    $(".checkAll").click(function () {
+      $(".check").prop('checked', $(this).prop('checked'));
+
+    });
+
+    $("#checkAllop").click(function () {
+      $(".check").prop('checked', true);
+      $(".checkAll").prop('checked', true);
+
+    });
+
+  });
+  $(document).ready(function () {
+    $("#myBtn").click(function () {
+      $("#myModal").modal();
+    });
+  });
+
+
+  $(document).ready(function () {
+    $("#adminCompose").click(function () {
+      $("#AdminModal").modal();
+    });
+  });
+  $(document).ready(function () {
+    $("#bulkCompose").click(function () {
+      $("#bulkMessage").modal();
+      $("#senderType").val("bulkMessage");
+
+    });
+  });
+
+  $(document).ready(function () {
+    $("#promoCompose").click(function () {
+      $("#bulkMessage").modal();
+      $("#senderType").val("promotional");
+    });
+
+    $("#adminInbox").on('click', function () {
+      $("#admin-userList").hide();
+      $("#admin-inbox").addClass('show');
+
+    });
+
+    $("#sentMessage").on('click', function () {
+      $("#admin-inbox").hide();
+      $("#admin-userList").addClass('show');
+
+    });
+
+    $(".reply").click(function () {
+      let id = parseInt($(this).attr("id"));
+      let sid = "#senderAdd" + id;
+      let subid = "#subject" + id;
+      let msgid = "#usermessage" + id;
+      let senderAdd = $.trim($(sid).text());
+      let subject = "RE : " + $.trim($(subid).text());
+      let message = $.trim($(msgid).text());
+      $("#inputTo").val(senderAdd);
+      $("#inputSubject").val(subject);
+      $('textarea.editor').val('message');
+
+    });
+
+    $(".forward").click(function () {
+      let id = parseInt($(this).attr("id"));
+      let sid = "#senderAdd" + id;
+      let subid = "#subject" + id;
+      let msgid = "#usermessage" + id;
+      let senderAdd = $.trim($(sid).text());
+      let subject = "FWD: " + $.trim($(subid).text());
+      let message = $.trim($(msgid).text());
+      $("#inputSubject").val(subject);
+      $('textarea.editor').val('message');
+
+    });
+
+
+
+  });
+
+    $(function() {
+    $("form[name='register-form']").validate({
+      rules: {
+        reg_username: "required",
+        reg_email: {
+          required: true
+        },
+        reg_password: {
+          required: true,
+          minlength: 6,
+          maxlength: 40
+        },
+        reg_password_confirm: {
+            required: true,
+            equalTo: "#reg_password"
+          }
+      },
+      messages: {
+        reg_username: "Required",
+        reg_password: {
+          required: "Required",
+          minlength: "Minimum 6 character required",
+          maxlength:"Maximum 40 character required"
+        },
+        reg_email: {
+          required: "Email id is mandatory",       
+        },
+        reg_password_confirm:{
+            required:'',
+            minlength:"Invalid",
+            equalTo:'Password do not match'
+        },
+       
+      },
+      submitHandler: function(form) {
+        form.submit();
+      }
+    });
+  });
+</script>

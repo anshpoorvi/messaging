@@ -1,0 +1,159 @@
+<% var month = [];
+month[0] = "Jan";
+month[1] = "Feb";
+month[2] = "Mar";
+month[3] = "Apr";
+month[4] = "May";
+month[5] = "Jun";
+month[6] = "Jul";
+month[7] = "Aug";
+month[8] = "Sep";
+month[9] = "Oct";
+month[10] = "Nov";
+month[11] = "Dec"; 
+%>
+    <div class="tab-pane fade in active" id="home">
+        <div class="list-group">
+                <form action="/delete" method="post" name="deleteForm" id="deleteForm">
+                 <input type="hidden" name="messageIds" id="messageIds">
+                <table class="table dataTable table-bordered inboxColor" id="reportTable">
+                        <thead>
+                          <tr>
+                            <th class="no-sort">Select</th>
+                            <th class="no-sort">Star</th>
+                            <th>Ether Address</th>
+                            <th>Subject</th>
+                            <th class="date">Date</th>
+                            <th class="no-sort">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                     <% var h=0;
+                            var i =0;
+                           data.sendData.forEach(function(suser){
+                        %>
+                        <tr id="<%= suser.id %>">
+                                <%if(suser.read_status === 0){%>
+                                    <script>
+                                        $('#<%=suser.id%>').css({ "font-weight": "bold" });
+                                    </script>
+        
+                                <%}%>
+                               
+                                        <%if(suser.read_status == 0 && suser.sender_address =='sponsored'){%>
+                                            <script>
+                                                var el = document.querySelector('.notification');
+                                                var count = Number(el.getAttribute('data-count')) || 0;
+                                                el.setAttribute('data-count', count + 1);
+                                                el.classList.remove('notify');
+                                                el.offsetWidth = el.offsetWidth;
+                                                el.classList.add('notify');
+                                                if (count === 0) {
+                                                    el.classList.add('show-count');
+                                                }
+                                            </script>
+                                        <%}%>
+                               
+                            <td>  
+                                  
+                            <input id="<%= suser.id %>" class="check" type="checkbox" name="<%=suser.id%>" value="<%=suser.id%>">
+                     </td>
+                        <td>  
+                            <span id="<%= suser.id %>" class="fa fa-star comet"></span> 
+
+                       </td>
+                            <td>   <span class="name" title="<%= suser.sender_address%>">
+                                <%= suser.sender_address%>
+                            </span></td>
+                            <td> <span class="">
+                                <%= suser.subject%>
+                            </span>
+                            <% if(suser.attachment){%>
+                                <span class="glyphicon glyphicon-paperclip pull-right"></span>
+                                <% } %>
+                        </td>
+                            <td> <span  title="<%= suser.date_time.getHours()+ " : " + suser.date_time.getMinutes() %>">&nbsp;&nbsp;
+
+                                <%=(month[suser.date_time.getMonth()] )+" "+
+                                        suser.date_time.getDate()%>
+                            </span></td>
+                            <td>
+                                <a href="#"> <span class="read" id="<%= suser.id%>" data-toggle="modal" data-target="#msg_data<%=h%>">...</span></a>   
+                                    
+                            </td>
+                     
+                    
+                        </tr>       
+                    <!-- ******************** -->
+                    <div class="container">
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="msg_data<%=h%>" role="dialog">
+                            <div class="modal-dialog">
+
+                                <!-- Modal content-->
+
+                                <div class="modal-content">
+                                    <!-- reply option -->
+                                    <%if(data.currentUser.email !== 'unsecured'){%>
+                                        <ul class="icon-list">
+                                            <li id="<%=i%>" class="reply" data-dismiss="modal" title="Reply">
+                                                <a href="#" role="button">
+                                                    <i class="fa fa-mail-reply "></i>
+                                                </a>
+                                            </li>
+                                            <li id="<%=i%>" title="Forward" data-dismiss="modal" class="forward">
+                                                <a href="#" role="button" class="disabled">
+                                                    <i class="fa fa-mail-forward"></i>
+                                                </a>
+                                            </li>
+
+                                        </ul>
+                                        <%}%>
+                                            <!-- /reply option -->
+                                            <br>
+                                            <div class="modal-header">
+
+                                                <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+                                                <h5 class="modal-title">From :
+                                                    <span id="senderAdd<%=i%>">
+                                                        <%= suser.sender_address%>
+                                                    </span>
+                                                </h5>
+                                                <h5 class="modal-title" class="subject">Subject :
+                                                    <span id="subject<%=i%>" class="subject-box">
+                                                        <%= suser.subject %>
+                                                    </span>
+                                                </h5>
+
+                                            </div>
+                                            <div class="modal-body">
+                                                <span id="usermessage<%=i%>" class="message-box">
+                                                    <%- suser.message%>
+                                                </span>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <% if(suser.attachment){%>
+                                                    <a href="/user/downloadFile/<%= suser.id %>">
+                                                        <span class="glyphicon glyphicon-paperclip pull-left"></span>
+                                                    </a>
+                                                    <% } %>
+                                                <button type="button" id="modalClose" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- *************************** -->
+                    <% h++; }); %>
+                </tbody>
+                </table>
+                </form>
+            <!-- end user msg -->
+
+        </div>
+
+    </div>

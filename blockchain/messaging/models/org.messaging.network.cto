@@ -1,0 +1,39 @@
+
+namespace org.messaging.network
+
+asset Message identified by messageId{
+  o String messageId
+  o String subject
+  o String content
+  o String attachment
+}
+
+participant User identified by userId {
+  o String userId
+  o String etherWalletAddress
+  o String name
+  o String email
+}
+
+transaction NewMessage {
+  o String messageId
+  o String subject
+  o String content
+  o String attachment
+}
+
+transaction NewUser {
+  o String userId
+  o String etherWalletAddress
+  o String name
+  o String email
+}
+
+transaction MessageExchange {
+  --> Message subject
+  --> Message message
+  --> Message attachment
+  --> User sender
+  --> User receiver
+  
+}

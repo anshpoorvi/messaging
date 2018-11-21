@@ -1,0 +1,5 @@
+query AllMessages {
+  description: "Returns all Message in the registry"
+  statement:  
+    SELECT org.messaging.network.Message
+}

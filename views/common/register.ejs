@@ -1,0 +1,82 @@
+            <div class="landing-page_content">
+                <div class="landing-page_header">
+                    <h1>Register</h1>
+                </div>
+                <div class="login-page_container row">
+                    <div class="col-sm-12 col-xs-12 no-padding">  
+                        <form id="register-form" action="/register_user" method="post" enctype="multipart/form-data" name="register-form">
+                            <div class="field-validation-error"><%= data.error %> </div>
+                            <div class="field-validation-success"><%= data.message %> </div>
+                              <div class="col-xs-12 col-sm-12">
+                                     
+                                  <input type="text" class="form-control" id="reg_username" name="reg_username" placeholder="Ether Address*" autocomplete="off">
+                                  <div class="field-validation-error"><%= data.ewaError %></div>
+                              </div>
+                              <div class="col-xs-12 col-sm-6">
+                              
+                                  <input type="password" class="form-control" id="reg_password" name="reg_password" placeholder="Password*" autocomplete="off">
+                                  <div class="field-validation-error"></div>
+                              </div>
+                              <div class="col-xs-12 col-sm-6">
+                                   
+                                      <input type="password" class="form-control" id="reg_password_confirm" name="reg_password_confirm" placeholder="Confirm Password*" autocomplete="off">
+                                      <div class="field-validation-error"></div>
+                                  </div>
+                              <div class="col-xs-12 col-sm-12">
+                                  
+                                  <input type="email" class="form-control" id="reg_email" name="reg_email" placeholder="Email*" autocomplete="off">
+                                  <div class="field-validation-error"></div>
+                              </div>
+<!-- 
+                              <div class="col-xs-12 col-sm-12">
+                            
+                                  <input type="text" class="form-control" id="reg_fullname" name="reg_fullname" placeholder="Full Name" autocomplete="off">
+                                  <div class="field-validation-error"></div>
+                              </div>
+                              <div class="col-xs-12 col-sm-12">
+                                  <input type="text" class="form-control" id="reg_contact" name="reg_contact" placeholder="Contact" autocomplete="off">
+                                  <div class="field-validation-error"></div>
+                              </div>
+                              <div class="col-xs-12 col-sm-12">
+                            
+                                <div class="input-group file-upload">
+                                <input type="text" class="form-control" id="fileName" readonly value="Profile Image" placholder="Profile Image">
+                                  <label class="input-group-btn">
+                                      <span class="btn btn-primary upload-button">
+                                          Browse <input type="file" id="imgUploadLink" name="uploaded_image" accept="" style="display: none;" >
+                                         
+                                        
+                                      </span>
+                                  </label>
+                                </div>
+                                 <div class="field-validation-error"></div>
+                                  
+                              <img id="uploadImage" src="#" alt="your image" />
+                              </div>
+
+                              <div class="col-xs-12 col-sm-12">
+                                  <div class="radio_container">
+                                      <input type="radio" class="" name="reg_gender" value="m" id="male">
+                                      <span>Male</span>
+                                      <input type="radio" class="" name="reg_gender" value="f" id="female">
+                                      <span>Female</span>
+                                  </div>
+                                  <div class="field-validation-error-small"></div>
+                              </div> -->
+  
+                              <div class="col-xs-12 col-sm-12">
+                                  <div class="check-box_container">
+                                      <input type="checkbox" class="" value="1" id="reg_agree" name="reg_agree">
+                                      <span>I agree with
+                                          <a href="policy">policies and terms.</a>
+                                      </span>
+                                  </div>
+                              </div>
+                           <div class="col-xs-12 col-sm-12 button-container">
+                                  <button class="button button--moema button--moema-white button--moema-white-shadow button--inverted button--text-thick button--size-s button--moema-small"
+                                      type="submit">Save</button>
+                              </div>
+                          </form>
+                    </div>
+                </div>
+            </div>
